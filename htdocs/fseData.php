@@ -22,6 +22,7 @@
                 $fseLng = trim($row['fse_lng']);
                 $dealer = trim($row['Dealer_Code']);
                 $fse = trim($row['FSE']);
+                // $fse = trim($row['fse']);
                 $caseNum = trim($row['Case#']);
                 $htssCaseNum = trim($row['HTSS_Case#']);
                 $visits = trim($row['Visits']);
@@ -67,7 +68,7 @@
                     "concern" => $concern,
                     "opened" => $opened,
                     "lastContact" => $lastContact,
-                    "caseStatus" => $caseStatus
+                    // "caseStatus" => $caseStatus
                 ),
                 "dealerData" => array(
                     "dealerAddress" => $dealerAddress,

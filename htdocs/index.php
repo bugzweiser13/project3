@@ -1,3 +1,7 @@
+<?php
+    include_once "connection.php";
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +9,8 @@
 <link rel="icon"  href="favicon.ico"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="pragma" content="no-cache" />
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Jura&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/login_style.css">
 
@@ -19,18 +24,17 @@
 
 <?php
     //database connectivity 
-    $cser=mysqli_connect('localhost','root','','test'); 
         if(isset($_POST['sub'])){
             
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $apw = mysqli_query($cser,"select password from fse_login where username='$username'");
+            $apw = mysqli_query($conn,"select password from fse_login where username='$username'");
             $adminPw=mysqli_fetch_assoc($apw);
 
-            $res = mysqli_query($cser,"select 'username', 'password' from fse_login where username='$username' and password='$password'");
+            $res = mysqli_query($conn,"select 'username', 'password' from fse_login where username='$username' and password='$password'");
             $result=mysqli_fetch_array($res);
            
-            $passId =  mysqli_query($cser, "select fse_id from fse_login where username='$username'");
+            $passId =  mysqli_query($conn, "select fse_id from fse_login where username='$username'");
             $id=mysqli_fetch_assoc($passId);
 
 
@@ -67,7 +71,8 @@
         } else {
     
         //incorrect login
-            echo '<h2><center><font color="red">Incorrect Username or Password Provided</font><center></h2>';
+            echo '<h2><center><font color="red">Incorrect Username and/or Password Provided</font><center></h2>';
+            header("refresh: 2; url = index.php"); 
             }
     }   
 ?>	
@@ -83,7 +88,7 @@
         </div>
         <div>
             <label for="uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required>
+            <input type="text" id="test" placeholder="Enter Username" name="username" required>
             <label for="psw"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="password" required>
             <button type="submit" name="sub" value="login" title="login">Login</button>

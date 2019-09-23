@@ -181,6 +181,12 @@ option {
     border-radius: 5px;
 }
 
+#heatInst {
+    font-size: 12px;
+    font-style: italic"
+
+}
+
 .case {
     text-align: center;
 }
@@ -197,6 +203,16 @@ option {
 @media only screen and (min-width: 200px) and (max-width: 1675px) {
     .dropdown-menu {
         max-width: 150px;
+    }
+    #sData,
+    #sDate {
+        font-size: 14px;
+    }
+    .btn {
+        font-size: 12px;
+    }
+    #heatInst {
+        font-size: 10px;
     }
     #casedata {
         height: 550px;

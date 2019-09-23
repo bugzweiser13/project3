@@ -1,5 +1,4 @@
 <?php
-    include_once "config.php";
     include_once "connection.php";
 ?>
 
@@ -59,7 +58,7 @@
   						//echo "<form method=post name=f1 action='casedata.php' target='casedata'>";
 	  					echo "<a>FSE: <select class='box_fse' name='cat' title='Select FSE Name' onchange='reload(this.form)'><option value=''>Select FSE Name</option>";
 					
-		  			foreach ($dbo->query($quer2) as $noticia2) {
+		  			foreach ($conn->query($quer2) as $noticia2) {
 			  			if($noticia2['fse_id']==@$cat) {
 				  			echo "<option selected value='$noticia2[fse_id]'>$noticia2[fse]</option>"."<BR>";
 					  	}

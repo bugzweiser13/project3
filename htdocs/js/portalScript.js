@@ -77,18 +77,20 @@ function dataPopulate(fseData) {
         });
     });
 
+
     // initial map population
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: mapZoomInt,
         center: fseLoc,
-        zoomControl: false,
+        zoomControl: true,
         mapTypeControl: false,
         scaleControl: false,
         streetViewControl: false,
         rotateControl: true,
         fullscreenControl: true
-
     });
+
+
 
     // console.log(mapZoomInt); 
 
@@ -107,34 +109,44 @@ function dataPopulate(fseData) {
                 vin: results[i].caseData.vin,
                 dealer: results[i].caseData.dealer,
                 lat: results[i].dealerData.dealerLat,
-                lng: results[i].dealerData.dealerLng
+                lng: results[i].dealerData.dealerLng,
+                date: results[i].caseData.lastContact,
+                fseLoc: fseLoc,
+                mapZoomInt: mapZoomInt
+
             });
         }
     }
-
     // marker location object
+
     var markerGroup = [];
 
     $("#dsearch").on('click', function() {
 
+        var dataSort = [];
+
         dealerCode = $("#dealerCode").val().trim();
         visitAmt = $("#visitAmt").val().trim();
         callAmt = $("#callAmt").val().trim();
-        strtDte = $("#strtDte").val().trim();
-        endDte = $("#endDte").val().trim();
 
-        // console.log('Start Date: ', strtDte);
-        // console.log('End Date: ', endDte);
+        var startDate = new Date($("#strtDte").val().trim());
+        var endDate = new Date($("#endDte").val().trim());
+
+        var filteredData = dateFilterer(dealerLoc, startDate, endDate);
+
+        dateSort = filteredData.finalValues
+
+        // console.log(dateSort);
 
         if (dealerCode === 'all' && visitAmt === '1' && callAmt === '%') {
-            for (let i = 0; i < dealerLoc.length; i++) {
+            for (let i = 0; i < dateSort.length; i++) {
 
-                var markerDealer = dealerLoc[i].dealer;
-                var markerVin = dealerLoc[i].vin;
-                var markerConcern = dealerLoc[i].concern;
+                var markerDealer = dateSort[i].dealer;
+                var markerVin = dateSort[i].vin;
+                var markerConcern = dateSort[i].concern;
 
-                localLat = parseFloat(dealerLoc[i].lat);
-                localLng = parseFloat(dealerLoc[i].lng);
+                localLat = parseFloat(dateSort[i].lat);
+                localLng = parseFloat(dateSort[i].lng);
 
                 // console.log(localLat);
                 // console.log(localLng);
@@ -152,88 +164,77 @@ function dataPopulate(fseData) {
 
     });
 
+    // date filter
+    function dateFilterer(sourceValues, startDate, endDate) {
+
+        function filterFunction_dates(sourceValue) {
+
+            //Aim: To test if the tested date is valid within a particular range
+            var rangeAcceptance = {
+                minValid: new Date(sourceValue.date) >= new Date(startDate),
+                maxValid: new Date(sourceValue.date) <= new Date(endDate)
+            };
+
+            var acceptanceResult; //boolean to determine if the relevant range specified is valid
+
+            if (startDate != "" && endDate != "") {
+
+                acceptanceResult = (rangeAcceptance.minValid && rangeAcceptance.maxValid);
+
+            } else if (startDate != "") {
+
+                acceptanceResult = rangeAcceptance.minValid;
+
+            } else if (endDate != "") {
+
+                acceptanceResult = rangeAcceptance.maxValid;
+
+            } else {
+
+                acceptanceResult = (1 == 1); //show all results if no specific range has been selected
+
+            }
+
+            return (acceptanceResult);
+
+        }
+
+        /*console.log({
+      
+          originalValues: sourceValues,
+          finalValues: sourceValues.filter(filterFunction_dates),
+          "time of filter": new Date()
+      
+        });*/
+
+        //Return the data for display
+        return ({
+
+            originalValues: sourceValues,
+            finalValues: sourceValues.filter(filterFunction_dates)
+
+        });
+
+    }
+
     function mapReload() {
 
-        // console.log("In initMap: " + localLat);
-        // console.log("In initMap: " + localLng);
-
-        //marker location placement
-        // var eventMarker = {
-        //     lat: localLat,
-        //     lng: localLng,
-        // };
-
-        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-        // //marker popup data display
-        // var contentString = '<div id=popUp>' +
-        //     '<div id="dlr">Dealer: ' + dealer + '</div>' +
-        //     '<div id="vin">VIN: ' + vin + '</div>' +
-        //     '<div id="concern">Concern: ' + concern + '</div>';
-
-        // //marker popup window command
-        // var infowindow = new google.maps.InfoWindow({
-        //     content: contentString
-        // });
-
-        //marker popup creation / placement (from ticketmaster api data population)
-        // var marker = new google.maps.Marker({
-        //     position: eventMarker,
-        //     map: map
-        // });
-
+        // console.log(markerGroup);
         var markers = markerGroup.map(function(location, i) {
             return new google.maps.Marker({
                 position: location,
-                label: labels[i % labels.length]
+                // label: labels[i % labels.length]
             });
         });
 
 
-
-        console.log(markerGroup);
         // Add a marker clusterer to manage the markers.
         var markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
 
-        //click listener to populate the marker information popup
-        // google.maps.event.addListener(markers, 'click', function() {
-        //     if (!markers.open) {
-        //         infowindow.open(map, markers);
-        //         markers.open = true;
-        //     } else {
-        //         infowindow.close();
-        //         markers.open = false;
-        //     }
-        //     google.maps.event.addListener(map, 'click', function() {
-        //         infowindow.close();
-        //         markers.open = false;
-        //     });
-        // });
-
+        markerGroup = [];
+        $("#dsearch").on('click', function() {
+            markerCluster.removeMarkers(markers);
+        });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

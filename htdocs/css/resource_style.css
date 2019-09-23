@@ -1,0 +1,247 @@
+/*
+========================================
+Layout
+========================================
+*/
+
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.links,
+.data {
+    display: inline-block;
+    vertical-align: top;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+/*
+========================================
+Navigation Links Section
+========================================
+*/
+
+.links_header {
+    text-align: center;
+    margin: 7% 0 0;
+    font-size: 30px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.links {
+    background-color: white;
+    background-image: linear-gradient( white, lightblue, rgb(102, 156, 226));
+    border-radius: 5px;
+    margin: 0 .75% 0;
+    width: 20%;
+    height: 675px;
+    overflow-y: scroll;
+    font-size: 17px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+/*
+========================================
+Links
+========================================
+*/
+
+a:link,
+a:visited {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+    text-decoration: none;
+}
+
+a:active {
+    color: black;
+    text-decoration: none;
+}
+
+
+/*
+========================================
+Quick Search Box
+========================================
+*/
+
+.search_header {
+    text-align: center;
+    margin: 1% 0 0;
+    font-size: 30px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.searchBoxes {
+    align-content: center;
+}
+
+.search {
+    position: relative;
+    background-color: rgb(236, 235, 235);
+    background-image: linear-gradient(rgb(236, 235, 235), grey);
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 0 5% 0;
+    width: 85%;
+    padding: 8px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.search input[type="text"] {
+    border: 1px solid black;
+    width: 80%;
+    padding: 1px;
+    margin: .5%;
+    /* float: center; */
+    font-size: 18px;
+}
+
+
+/*
+========================================
+Case Data Retrieval
+========================================
+*/
+
+.data_header {
+    text-align: center;
+    margin: 1% 0 0;
+    font-size: 40px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.reload img,
+.logout img {
+    width: 25px;
+}
+
+.data {
+    background-color: white;
+    background-image: linear-gradient( white, lightblue, rgb(102, 156, 226));
+    border-radius: 5px;
+    text-align: center;
+    height: 675px;
+    width: 77%;
+    margin: 0 .25% 0;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.box1,
+.box2,
+.box3,
+.box4 {
+    border: 1px inset grey;
+    border-bottom: 1px inset black;
+    border-radius: 5px;
+    background: white;
+    color: rgb(101, 101, 248);
+    font-size: 15px;
+    width: 150px;
+    padding: 2px;
+    cursor: pointer;
+    margin-right: 3px;
+    margin-bottom: 4px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.date {
+    border: 1px inset grey;
+    border-bottom: 1px inset black;
+    border-radius: 5px;
+    background: white;
+    text-align: center;
+    font-size: 15px;
+    color: rgb(101, 101, 248);
+    font-style: italic;
+    padding: 2px;
+    cursor: pointer;
+    width: 120px;
+    margin-bottom: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+input[type=date]::-webkit-inner-spin-button,
+::-webkit-clear-button {
+    -webkit-appearance: none;
+    display: none;
+}
+
+.fetch {
+    border: 1px solid rgb(101, 101, 248);
+    border-radius: 5px;
+    font-size: 15px;
+    font-style: italic;
+    font-weight: bold;
+    color: rgb(101, 101, 248);
+    margin: 0 10px 0;
+    padding: 3.5px;
+    cursor: pointer;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.header2 {
+    width: auto;
+}
+
+.case {
+    border-radius: 5px;
+    border-top: 1px solid grey;
+    background-color: white;
+    background-image: linear-gradient(white, rgb(238, 237, 237));
+    margin: 0 auto;
+    width: 98%;
+    height: 510px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.case iframe {
+    border: 2px solid grey;
+    border-radius: 5px;
+    width: 98%;
+    height: 90%;
+    margin: 1% 0 0;
+}
+
+footer {
+    position: absolute;
+    margin: auto;
+    top: 900px;
+    height: 5%;
+    width: 99%;
+}
+
+@media only screen and (min-width: 1006px) and (max-width: 1800px) {
+    .data_header {
+        font-size: 30px;
+    }
+    .search_header,
+    .links_header {
+        font-size: 25px;
+    }
+    .links {
+        font-size: 14px;
+    }
+    .search {
+        padding: 4px;
+    }
+    .search input[type="text"] {
+        border: 1px solid black;
+    }
+}

@@ -1,5 +1,5 @@
 <?php
-		include_once "config.php";
+		// include_once "config.php";
 		include_once "connection.php";
 ?>
 
@@ -169,7 +169,7 @@
                     <div class="col-lg-12">
                         <div class="card" id="mapDataCard" style="height: 485px;">
                             <div class="card-header" style="text-align: center">
-                                <p>Case Heat Map <span style="font-size:12px; font-style: italic">(select all dealers / cases to see locations)</span></p>
+                                <p>Case Heat Map <span id="heatInst">(select all dealers / cases to see locations)</span></p>
                             </div>
                             <div class="card-body">
                                 <div id="map">
@@ -277,7 +277,7 @@
                                                         //    <form method=post name=f1 action='casedata_selectable.php' target='casedata'>
                                     echo "<select class='btn btn-secondary btn-sm box' name='cat' id='cat' onchange='reload(this.form)'><option  style='display:none;' value=''>FSE Name</option>";
                                         
-                                        foreach ($dbo->query($quer2) as $noticia2) {
+                                        foreach ($conn->query($quer2) as $noticia2) {
                                             if($noticia2['fse_id']==@$cat) {
                                                 echo "<option selected value='$noticia2[fse_id]'>$noticia2[fse]</option>"; //preloads FSE selected at login by fse_id #
                                                 
@@ -303,7 +303,7 @@
                                         <select class='btn btn-secondary btn-sm dropdown-toggle box ml-1' name='dealer' id='dealerCode' title='Select Dealer Code'><option value=''>Dealer Code</option>
                                             <option value='all'>All Dealers</option>"."<BR>";
                                             
-                                        foreach ($dbo->query($quer) as $noticia) {
+                                        foreach ($conn->query($quer) as $noticia) {
                                             echo  "<option value='$noticia[dealer_code]'>$noticia[dealer_code]</option>";
                                         }
                                             //echo  "<option value='%'>All Cases</option>"."<BR>"; (if all case data is wanted, will only populate all FSE data)
@@ -316,7 +316,7 @@
                                     echo "<div class='dropdown'>
                                     <div class='dropdown-menu1' aria-labelledby='dropdownMenuButton'>
                                         <select class='btn btn-secondary btn-sm dropdown-toggle box ml-1' name='visits' id='visitAmt' title='Select Amount of Visits'><option value=''>Visits</option>";
-                                        foreach ($dbo->query($quer) as $noticia) {
+                                        foreach ($conn->query($quer) as $noticia) {
                                             //echo  "<option value='1'>1</option>"."<BR>";
                                             echo  "<option value='2'>2</option>"."<BR>";
                                             echo  "<option value='3'>3</option>"."<BR>";
@@ -335,7 +335,7 @@
                                     echo "<div class='dropdown'>
                                     <div class='dropdown-menu1' aria-labelledby='dropdownMenuButton'>
                                         <select class='btn btn-secondary btn-sm dropdown-toggle box ml-1' name='calls' id='callAmt' title='Select Call Count'><option value=''>Call Count</option>";
-                                        foreach ($dbo->query($quer) as $noticia) {
+                                        foreach ($conn->query($quer) as $noticia) {
                                             echo  "<option value='1'>1</option>"."<BR>";
                                             echo  "<option value='2'>2</option>"."<BR>";
                                             echo  "<option value='3'>3</option>"."<BR>";
