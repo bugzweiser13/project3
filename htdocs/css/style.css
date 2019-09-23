@@ -1,0 +1,18 @@
+body {
+	background-color: white;
+	font-family: hyundai sans text;
+	width: calc(100vw - 24px);
+}
+.header {
+    position: relative;
+    margin: 0 auto 0 1%;
+}
+img { 
+    width: 100%;
+}
+/*footer {
+    margin: auto;
+    top: 900px;
+    height: 10%; 
+    width: 100%;
+}*/

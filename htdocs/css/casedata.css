@@ -1,0 +1,54 @@
+table {
+    border-collapse: separate;
+    border: 1px solid black;
+    border-spacing: 4px;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-top: 3%;
+}
+
+table,
+td,
+th {
+    border: 1px solid blue;
+    padding: 3px;
+}
+
+th {
+    text-align: Center;
+    font-style: italic;
+    font-size: 16px;
+}
+
+td {
+    text-align: Center;
+    font-size: 13px;
+    color: red;
+}
+
+.header2a {
+    width: 100%;
+}
+
+
+/*
+========================================
+Links
+========================================
+*/
+
+a:link,
+a:visited {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+    text-decoration: none;
+}
+
+a:active {
+    color: black;
+    text-decoration: none;
+}
