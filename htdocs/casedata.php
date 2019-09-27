@@ -5,8 +5,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Custom CSS -->
+<!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery.js"></script>
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+<!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- Bootstap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Jura&display=swap" rel="stylesheet">
+<!--custom css-->
 <link rel="stylesheet" type="text/css" href="css/casedata.css"> 
 
 <header> 
@@ -35,11 +47,15 @@ $endDate=$_POST['endDate'];
 
 if ($dealer === "all"){
 
-    $sql = "SELECT * FROM crm_data INNER JOIN fse_list ON crm_data.FSE=fse_list.fse WHERE
-                                                            crm_data.FSE LIKE '$fseName' AND
-                                                            crm_data.Visits >= '$visits' AND
-                                                            crm_data.Call_Count LIKE '$calls' AND          
-                                                            crm_data.Last_Contact BETWEEN '".$fromDate."' AND '".$endDate."' ORDER BY Last_Contact";
+    $sql = "SELECT * FROM crm_data
+    INNER JOIN fse_dealer_master
+    ON crm_data.Dealer_Code=fse_dealer_master.dealer_code 
+    INNER JOIN fse_list 
+    ON crm_data.FSE=fse_list.fse WHERE
+                                                crm_data.FSE LIKE '$fseName' AND
+                                                crm_data.Visits >= '$visits' AND
+                                                crm_data.Call_Count LIKE '$calls' AND          
+                                                crm_data.Last_Contact BETWEEN '".$fromDate."' AND '".$endDate."' ORDER BY Last_Contact";
 
     // $sql = "SELECT * FROM `crm_data` WHERE
     //                                         FSE LIKE '$fseName' AND
@@ -53,11 +69,21 @@ if ($dealer === "all"){
 
 } else {
 
-    $sql = "SELECT * FROM `crm_data` INNER JOIN fse_list ON crm_data.FSE=fse_list.fse WHERE
-                                                            dealer_code LIKE '$dealer' AND
-                                                            Visits >= '$visits' AND
-                                                            Call_Count LIKE '$calls' AND
-                                                            Last_Contact BETWEEN '".$fromDate."' AND '".$endDate."' ORDER BY Last_Contact";
+    $sql = "SELECT * FROM crm_data
+    INNER JOIN fse_dealer_master
+    ON crm_data.Dealer_Code=fse_dealer_master.dealer_code 
+    INNER JOIN fse_list 
+    ON crm_data.FSE=fse_list.fse WHERE
+                                    crm_data.dealer_code LIKE '$dealer' AND
+                                    crm_data.Visits >= '$visits' AND
+                                    crm_data.Call_Count LIKE '$calls' AND          
+                                    crm_data.Last_Contact BETWEEN '".$fromDate."' AND '".$endDate."' ORDER BY Last_Contact";
+
+    // $sql = "SELECT * FROM `crm_data` INNER JOIN fse_list ON crm_data.FSE=fse_list.fse WHERE
+    //                                                         dealer_code LIKE '$dealer' AND
+    //                                                         Visits >= '$visits' AND
+    //                                                         Call_Count LIKE '$calls' AND
+    //                                                         Last_Contact BETWEEN '".$fromDate."' AND '".$endDate."' ORDER BY Last_Contact";
                                 
     $result = mysqli_query($conn, $sql);
 
@@ -69,7 +95,8 @@ function tableGen($result){
     if ($result) {
         // it return number of rows in the table.
         $row = mysqli_num_rows($result);    
-
+        echo "<div id='count' style='text-align:center;'><p>Number of Cases Shown from Selection: <span>".$row."</span></p></div>";
+        
         // printf("Number of Cases Shown: " . $row );
     }
 
@@ -103,14 +130,14 @@ echo "<table>
             <tr>";
 //          echo "<td><input type='checkbox' name='select' value='select'><br></td>"; //need to add echo above to add to table
             echo "<td><a href='http://10.112.5.10/vinoogle/techviewer.php?caseNum=" . $row['Case#'] ."' 
-            target='_blank' title='Techline Case Data'>" . $row['Case#'] . "</a></td>";
+            target='_blank' title='" .$row['Customer_Concern']. $row['Dealer_Technician']. "'>" . $row['Case#'] . "</a></td>";
 //          echo "<td><a href ='http://connect.tecklinks.com' target='_blank' title='Update Techline Case'>Update Case</a></td>";
 //          echo "<td><a href ='https://connect.tecklinks.com/user/vin_search.aspx#' target='_blank' title='Update Techline Case'>Update Case</a></td>";
             echo "<td><a href ='https://connect.tecklinks.com/user/case_manage.aspx?type=mod&hc_case_no=" .$row['HTSS_Case#'] ."&search_param=%7B%22search_type%22%3A%22vin%22%2C%22search_text%22%3A%22" . $row['VIN'] . "%22%7D' 
             target='_blank' title='Update Techline Case'>" .$row['HTSS_Case#'] . "</a></td>";
             echo "<td>" . $row['FSE'].          "</td>";
             echo "<td><a href='https://gds.hyundaitechinfo.com:447/eReport/diaglist.aspx?&uid=" . $row['Dealer_Code'] . "GDS&cpcode=B28AA" . $row['Dealer_Code'] . "&vin=" . $row['VIN'] . "&device=GDSM"."';
-            target='_blank' title='eReport Information'>" . $row['Dealer_Code'] . "</a></td>";
+            target='_blank' title='".$row['dealer_name']." eReport Information'>" . $row['Dealer_Code'] . "</a></td>";
             echo "<td>" . $row['Visits'].       "</td>";
             echo "<td>" . $row['Call_Count'].   "</td>";
             echo "<td><a href='http://10.112.5.10/vinoogle/_vinoogle.php?vinnum=" . $row['VIN'] . "' 

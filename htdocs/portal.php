@@ -167,14 +167,14 @@
                     <div class="card-body">        
                 <div class="row">            
                     <div class="col-lg-12">
-                        <div class="card" id="mapDataCard" style="height: 485px;">
+                        <div class="card" id="mapDataCard" style="height: 480px;">
                             <div class="card-header" style="text-align: center">
                                 <p>Case Heat Map <span id="heatInst">(select all dealers / cases to see locations)</span></p>
                             </div>
                             <div class="card-body">
                                 <div id="map">
                                     <div class="d-flex justify-content-center mt-5">
-                                        <img class="mt-4" id="loading" src="img/loading.gif" alt="loading.gif" style="width: 50%;">
+                                        <img class="mt-3" id="loading" src="img/loading.gif" alt="loading.gif" style="width: 50%;">
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@
                     <div class="col-lg-12">
                         <div class="card" id="quickSearchCard">
                             <div class="card-header" style="color-white;">
-                                Quick Searches
+                                <p>Quick Searches</p>
                             </div>
                             <div class="card-body" id="qs">
                                 <div class="row">
@@ -258,7 +258,7 @@
 
                                     $quer2="SELECT DISTINCT * FROM fse_list"; 
                                         if(isset($cat) and strlen($cat) > 0) {
-                                            $quer="SELECT DISTINCT dealer_code, dealer_id, fse FROM fse_dealer_master3 WHERE fse_id=$cat ORDER BY dealer_code"; 
+                                            $quer="SELECT DISTINCT dealer_code, dealer_id, fse FROM fse_dealer_master WHERE fse_id=$cat ORDER BY dealer_code"; 
                                         } 
                                         //else {
                                         //	"Select Name"; 
@@ -273,13 +273,13 @@
                                                 <div class='navbar-nav ml-auto'>
                                                     <div class='dropdown'>
                                                         <div class='dropdown-menu1' aria-labelledby='dropdownMenuButton'>
-                                                            <form method=post name=f1 action='casedata.php' target='casedata'>";
+                                                           <!-- <form method=post name=f1 action='casedata.php' target='casedata'> --> ";
                                                         //    <form method=post name=f1 action='casedata_selectable.php' target='casedata'>
-                                    echo "<select class='btn btn-secondary btn-sm box' name='cat' id='cat' onchange='reload(this.form)'><option  style='display:none;' value=''>FSE Name</option>";
+                                    echo "<select class='btn btn-secondary btn-sm box' name='cat' id='cat' onchange='reload(this.form)'><option style='display:none;' value=''>FSE Name</option>";
                                         
                                         foreach ($conn->query($quer2) as $noticia2) {
                                             if($noticia2['fse_id']==@$cat) {
-                                                echo "<option selected value='$noticia2[fse_id]'>$noticia2[fse]</option>"; //preloads FSE selected at login by fse_id #
+                                                echo "<option style='display:none;' selected value='$noticia2[fse_id]'>$noticia2[fse]</option>"; //preloads FSE selected at login by fse_id #
                                                 
                                                 $fseName = trim($noticia2['fse']);
                                                 echo "<input type='hidden' name='fseName' id='fseNameTrig' value='".$fseName."'></input>";
@@ -300,7 +300,7 @@
                                     //Start Dealer Code Selection
                                     echo "<div class='dropdown'>
                                     <div class='dropdown-menu1' aria-labelledby='dropdownMenuButton'>
-                                        <select class='btn btn-secondary btn-sm dropdown-toggle box ml-1' name='dealer' id='dealerCode' title='Select Dealer Code'><option value=''>Dealer Code</option>
+                                        <select class='btn btn-secondary btn-sm dropdown-toggle box ml-1' name='dealer' id='dealerCode' title='Select Dealer Code'><option value='' style='display:none;'>Dealer Code</option>
                                             <option value='all'>All Dealers</option>"."<BR>";
                                             
                                         foreach ($conn->query($quer) as $noticia) {
@@ -315,7 +315,7 @@
                                     //Start of Visits Selection
                                     echo "<div class='dropdown'>
                                     <div class='dropdown-menu1' aria-labelledby='dropdownMenuButton'>
-                                        <select class='btn btn-secondary btn-sm dropdown-toggle box ml-1' name='visits' id='visitAmt' title='Select Amount of Visits'><option value=''>Visits</option>";
+                                        <select class='btn btn-secondary btn-sm dropdown-toggle box ml-1' name='visits' id='visitAmt' title='Select Amount of Visits'><option value='' style='display:none;'>Visits</option>";
                                         foreach ($conn->query($quer) as $noticia) {
                                             //echo  "<option value='1'>1</option>"."<BR>";
                                             echo  "<option value='2'>2</option>"."<BR>";
@@ -334,18 +334,13 @@
                                     //Start of Call Count Selection
                                     echo "<div class='dropdown'>
                                     <div class='dropdown-menu1' aria-labelledby='dropdownMenuButton'>
-                                        <select class='btn btn-secondary btn-sm dropdown-toggle box ml-1' name='calls' id='callAmt' title='Select Call Count'><option value=''>Call Count</option>";
+                                        <select class='btn btn-secondary btn-sm dropdown-toggle box ml-1' name='calls' id='callAmt' title='Select Call Count'><option value='' style='display:none;'>Call Count</option>";
                                         foreach ($conn->query($quer) as $noticia) {
                                             echo  "<option value='1'>1</option>"."<BR>";
                                             echo  "<option value='2'>2</option>"."<BR>";
                                             echo  "<option value='3'>3</option>"."<BR>";
                                             echo  "<option value='4'>4</option>"."<BR>";
                                             echo  "<option value='5'>5</option>"."<BR>";
-                                            echo  "<option value='6'>6</option>"."<BR>";
-                                            echo  "<option value='7'>7</option>"."<BR>";
-                                            echo  "<option value='8'>8</option>"."<BR>";
-                                            echo  "<option value='9'>9</option>"."<BR>";
-                                            echo  "<option value='10'>10</option>"."<BR>";
                                             echo  "<option value='%'>All Cases</option>"."<BR>";
                                             break;
                                         }
@@ -358,12 +353,13 @@
                                     $month = date('m');
                                     $day = date('d');
 
-                                    $date_string = "$year-$month-$day";
+                                    $strtDte = date('Y-m-d', strtotime("-1 week")); //1 week ago
+                                    $endDte = "$year-$month-$day";
 
                                     echo "<div id='dte'>
                                             <div class='dropdown-menu1' aria-labelledby='dropdownMenuButton'>
-                                                <h6 class='ml-3' id='sDate'>Date Range: </h6><input type='date' min='2019-01-01' class='date ml-2 mr-1' name='fromDate' id='strtDte' value='2019-01-01' title='Select Start Date'>
-                                                    <b>~</b><input type='date' class='date ml-1' name='endDate' id='endDte' value='" . $date_string . "' title='Select End Date'>
+                                                <h6 class='ml-3' id='sDate'>Date Range: </h6><input type='date' min='2019-01-01' class='date ml-2 mr-1' name='fromDate' id='strtDte' value='" . $strtDte . "' title='Select Start Date'>
+                                                    <b>~</b><input type='date' class='date ml-1' name='endDate' id='endDte' value='" . $endDte . "' title='Select End Date'>
                                             </div>
                                         </div>";
 
@@ -378,12 +374,45 @@
                                 </div>
                             </div>
                         <div class="row mt-1">
-                        <div class="col-lg-12 case" >
-                            <iframe name="casedata" class="mt-2" id="casedata" src="img/fse/n_header2ab.jpg" class="header2" style="width: 100%;"></iframe>	
-                            <caption><font size="2px", font color="red"><i id="caption">***All Field Items Above Must Be Selected, to Populate Case Data Here***</i></caption>
+                            <!-- <div class="col-lg-12 case" >
+                                <iframe name="casedata" class="mt-2" id="caseData" src="img/fse/n_header2ab.jpg" class="header2" style="width: 100%;"></iframe>	
+                                <caption><font size="2px", font color="red"><i id="caption">***All Field Items Above Must Be Selected, to Populate Case Data Here***</i></caption>
+                            </div> -->
+                            <div class="col-lg-12 mt-1" id="caseData">
+                                <img src="img/fse/n_header2abc.jpg" class="header2" style="width: 100%;">
+                                <table>
+                                <table class="table table-striped table-hover table-sm" id="tlPlot">
+                                    <!-- <div id="noCase"><p>There are No Cases from Selection Chosen</p></div> -->
+                                <thead id="tableHead" Style="font-weight: bolder; font-style: italic; font-size: 15px; text-align: center;">
+                                    <tr>
+                                        <th scope="col">Select</th>
+                                        <th scope="col">Techline Case#</th>
+                                        <th scope="col">HTSS Case#</th>
+                                        <th scope="col">FSE</th>
+                                        <th scope="col">Dealer Code</th>
+                                        <th scope="col">Visits</th>
+                                        <th scope="col">Call Count</th>
+                                        <th scope="col">VIN</th>
+                                        <th scope="col">Year</th>
+                                        <th scope="col">Model</th>
+                                        <th scope="col">Mileage</th>
+                                        <th scope="col">Case Opened</th>
+                                        <th scope="col">Last Contact</th>
+                                        <th scope="col">Case Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id=tlData Style="font-size: 13px;">
+                                    <tr>
+                                        <td colspan='14' id="noCase" style="display: none;"><i>No Records / Data Found (or search fields blank).</i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
+                    </div>    
                 </div>
+                <div>
+                    <p id="caption">***All Field Items Above Must Be Selected, to Populate Case Data Here***</p>
+                </div>    
             </div>
         </div>
     </div>       
