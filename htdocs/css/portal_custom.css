@@ -187,15 +187,43 @@ option {
 
 }
 
-.case {
+#caption {
+    border-top: 1px solid black;
     text-align: center;
+    font-size: 15px;
+    color: red;
 }
 
-#casedata {
-    border: 1px solid black;
-    width: 100%;
-    height: 560px;
+#caseData {
+    overflow: auto;
+    /* border: 1px solid black; */
     border-radius: 5px;
+    width: 100%;
+    height: 570px;
+}
+
+th,
+td {
+    text-align: center;
+    vertical-align: bottom;
+}
+
+#noCase {
+    text-align: center;
+    font-weight: bolder;
+    color: red;
+    font-style: italic;
+}
+
+#popUp {
+    text-align: center;
+    font-family: 'Jura', sans-serif;
+}
+
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+    /* background-color: #3cace0; */
+    background-color: lightgrey;
 }
 
 @media (max-width: 1675px) {}
