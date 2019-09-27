@@ -67,7 +67,7 @@ function performSearch() {
         document.getElementById("erHvin").value = "";
         setTimeout("document.getElementById('sb').focus()", 10);
         $('#erHvin').attr('class', 'erH_no_focus');
-        var url = "https://gds.hyundaitechinfo.com:447/eReport/diaglist.aspx?&cpcode=B28AA&vin=" + vin + "&device=GDSM";
+        var url = "https://gds.hyundaitechinfo.com:447/eReport/diaglist.aspx?&uid=GDS&cpcode=B28AA&vin=" + vin + "&device=GDSM";
         // window.open(url,"_blank","toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes");
         // window.open(url, "_blank", "toolbar=yes, location=yes, directories=yes, status=yes, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes");
         windowOpen(url);
@@ -82,7 +82,7 @@ function performSearch() {
         document.getElementById("erGvin").value = "";
         setTimeout("document.getElementById('sb').focus()", 10);
         $('#erGvin').attr('class', 'erG_no_focus');
-        var url = "https://gds.genesistechinfo.com/ereport/diaglist.aspx?uid=GDS&cpcodeB28AA&vin=" + vin + "&device=GDSM";
+        var url = "https://gds.genesistechinfo.com/ereport/diaglist.aspx?&uid=GDS&cpcodeB28AA&vin=" + vin + "&device=GDSM";
         // window.open(url,"_blank","toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes");
         // window.open(url, "_blank", "toolbar=yes, location=yes, directories=yes, status=yes, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes");
         windowOpen(url);
@@ -151,7 +151,7 @@ function whichButton(evt) {
                 box.value = c;
                 var erHvin = box.value;
                 box.value = "";
-                var url = "https://gds.hyundaitechinfo.com:447/eReport/diaglist.aspx?&cpcode=B28AA&vin=" + erHvin; + "&device=GDSM";
+                var url = "https://gds.hyundaitechinfo.com:447/eReport/diaglist.aspx?&uid=GDS&cpcode=B28AA&vin=" + erHvin; + "&device=GDSM";
                 window.open(url, "_blank", "toolbar=yes, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes");
                 break;
                 //eReport (genesis)        
