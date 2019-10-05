@@ -65,7 +65,8 @@ Login Button
 ========================================
 */
 
-button {
+
+/* button {
     background-color: #0000ff;
     color: white;
     padding: 5px 5px;
@@ -74,8 +75,8 @@ button {
     cursor: pointer;
     width: 45%;
     font-size: 20px;
-    /*box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);*/
-}
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+} */
 
 input[type=checkbox] {
     transform: scale(1.5);
@@ -93,8 +94,8 @@ Email / Password Reset
     background-color: lightgrey;
     border-radius: 0 0 20px 20px;
     margin: 5px 0 0;
-    padding: 5px;
-    text-align: right;
+    padding: 10px;
+    /* text-align: right; */
     /*box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);*/
 }
 

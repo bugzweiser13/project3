@@ -4,17 +4,15 @@
 
     // ini_set("memory_limit","3000M");
 
-    // if (filemtime('cache.txt') < time()-1*1800) {
-
         $query = "SELECT * FROM crm_data INNER JOIN fse_dealer_master ON crm_data.Dealer_Code=fse_dealer_master.dealer_code INNER JOIN fse_list ON fse_dealer_master.fse=fse_list.fse";
 
         $result = mysqli_query($conn, $query);
 
-        if ($row = mysqli_fetch_array($result)) {
+        // if ($row = mysqli_fetch_array($result)) {
      
             // $rows = array();
             
-            $return_arr = array();
+        $return_arr = array();
 
             while ($row = mysqli_fetch_array($result)) {
                 $fseId = trim($row['fse_id']);
@@ -54,7 +52,6 @@
                 $lat = trim($row['lat']);
                 $lng = trim($row['lng']);
 
-
                 $return_arr[] = array(
             
                 "fseData" => array(
@@ -64,6 +61,7 @@
                     "mapZoom" => $mapZoom,
                     "fseLat" => $fseLat,
                     "fseLng" => $fseLng
+
                 ),
                 "caseData" => array(
                     "dealer" => $dealer,
@@ -93,23 +91,13 @@
                           
             );
             }
-   
-        // store query result in cache.txt
-        // file_put_contents('cache.txt', serialize(json_encode($return_arr)));
 
         // Encoding array in JSON format
-        // echo json_encode($return_arr);
         echo json_encode($return_arr);
         
         exit();
-     }
+    //  }
 
-    
-    // else {
-    //     echo 'An error occured: data could not be extracted from the database.';
-    // }
-// }
-// else {
-//     $data = unserialize(file_get_contents('cache.txt'));
-//     echo $data;
-// }
+     //$token = bin2hex(random_bytes(64));
+     //$token = strtr($token, '+/', '-_');
+     

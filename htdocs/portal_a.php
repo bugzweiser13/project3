@@ -30,10 +30,11 @@
 
 <script>
 function reload(form) {
-    var val = cat
-    self.location = 'portal.php?cat=' + val;
+    //var val=form.cat.options[form.cat.options.selectedIndex].value;
+    var val = $('#cat').val();
+    self.location = 'portal_a.php?cat=' + val;
 }
-</script>
+// </script>
 
 <style>
     /* search inputs image population */
@@ -181,7 +182,7 @@ function reload(form) {
                             <div class="card-body">
                                 <div id="map">
                                     <div class="d-flex justify-content-center mt-5">
-                                        <img class="mt-2" id="loading" src="img/loading.gif" alt="loading.gif" style="width: 50%;">
+                                        <img class="mt-3" id="loading" src="img/loading.gif" alt="loading.gif" style="width: 50%;">
                                     </div>
                                 </div>
                             </div>
@@ -242,55 +243,11 @@ function reload(form) {
         </div>
         </div>
         <div class="col-lg-8">
-            <div class="card" id="workBench">
-                <div class="card-header">
-                <h4>Case Workbench
-                    <a onclick="pageToggle()" id="#carSwitch" style="text-decoration: none; float:right; cursor: pointer;" title="Click to view Techline Case Data"><i class="fa fa-car fa-lg" aria-hidden="true"></i></a>
-                    <a onclick="savedCaseGet()" style="text-decoration: none; cursor: pointer; float:right; color: white;" class="reload mr-1" title="refresh table"><i class="fa fa-refresh fa-lg" aria-hidden="true"></i></a>
-                </h4>
-                </div>
-                <div class="card-body">
-                <div class="col-lg-12 mt-1" id="saveCaseData">
-                                <img src="img/fse/n_header2abc.jpg" class="header2" style="width: 25%;">
-                                <p class="mr-2 mt-3" style="float:right;">cases: <span class="ml-2" id="saveCases">00</span></p>
-                                <button type="button" class="btn btn-secondary btn-sm mt-3 mr-2" id="deleteCase" style="float:right; display: none;" title="select case/s below then press delete">Delete</button>
-                                <button type="button" class="btn btn-secondary btn-sm mt-3 mr-3" id="saveNote" style="float:right; display: none;" title="select case/s below then press save">Save Note</button>
-            
-                                <table>
-                                <table class="table table-striped table-hover table-sm" id="scPlot">
-                                    <!-- <div id="noCase"><p>There are No Cases from Selection Chosen</p></div> -->
-                                <thead id="tableHead" Style="font-weight: bolder; font-style: italic; font-size: 15px; text-align: center;">
-                                    <tr>
-                                        <th scope="col" width ="5%">Delete Case</th>
-                                        <th scope="col" width ="10%">Techline Case#</th>
-                                        <th scope="col" width ="10%">Dealer</th>
-                                        <th scope="col" width ="15%">VIN</th>
-                                        <th scope="col" width ="10%">Visits</th>
-                                        <th scope="col" width ="35%">Notes</th>
-                                        <th scope="col" width ="5%">Save Note</th> 
-                                        <th scope="col" width ="20%">Note Input / Update</th>
-                                    </tr>
-                                </thead>
-                                <tbody id=scData Style="font-size: 13px;">
-                                    <tr>   
-                                        <!-- <td colspan='14' id="noCase" style="display: none;"><i>No Records / Data Found (or search fields blank).</i></td>   -->
-                                    </tr>
-                                    <!-- <div id="logo"><img src="img/logos/h_logo.jpg" alt="img/logos/h_logo.jpg" style="width: 100%;"></div> -->
-                                </tbody>
-                                </table>
-                            </div>
-
-
-
-                </div>
-            </div>  
             <div class="card" id="tlCard">
                         <div class="card-header">
                             <h4>Techline Case Data
-                                <a onclick="pageToggle()" id="#carSwitch" style="text-decoration: none; float:right; cursor: pointer;" class="switchView ml-1" title="Click to view Case Workbench"><i class="fa fa-car fa-lg" aria-hidden="true"></i></a>
                                 <a href="index.php" style="text-decoration: none; float:right; color: white;" class="logout ml-2" title="logout"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i></a>
                                 <a onclick="reload()" style="text-decoration: none; cursor: pointer; float:right; color: white;" class="reload" title="reload"><i class="fa fa-refresh fa-lg" aria-hidden="true"></i></a>
-                                
                             </h4>
                         </div>
                         <div class="card-body">
@@ -326,25 +283,31 @@ function reload(form) {
                                                         <div class='dropdown-menu1' aria-labelledby='dropdownMenuButton'>
                                                            <!-- <form method=post name=f1 action='casedata.php' target='casedata'> --> ";
                                                         //    <form method=post name=f1 action='casedata_selectable.php' target='casedata'>
-                                    echo "<select class='btn btn-secondary btn-sm box' name='cat' id='cat' onchange='reload(this.form)'><option style='display:none;' value=''>FSE Name</option>";
+                                    echo "<select class='btn btn-secondary btn-sm box' name='cat' id='cat' onchange='reload(this.form)'><option style='display:none;' value=''>Select FSE</option>";
                                         
                                         foreach ($conn->query($quer2) as $noticia2) {
                                             if($noticia2['fse_id']==@$cat) {
                                                 echo "<option style='display:none;' selected value='$noticia2[fse_id]'>$noticia2[fse]</option>"; //preloads FSE selected at login by fse_id #
                                                 
-                                                $fseName = trim($noticia2['fse']);
-                                                echo "<input type='hidden' name='fseName' id='fseNameTrig' value='".$fseName."'></input>";
+                                                // $fseName = trim($noticia2['fse']);
+                                                // echo "<input type='hidden' name='fseName' id='fseNameTrig' value='".$fseName."'></input>";
                                                 
-                                                $fseZip = trim($noticia2['zipcode']);
+                                                // $fseZip = trim($noticia2['zipcode']);
                                                 
                                             } else {
-                                                //echo"<option value='$noticia2[fse_id]'>$noticia2[fse]</option>"; //Comment out to block all FSE selections
+                                                echo"<option value='$noticia2[fse_id]'>$noticia2[fse]</option>"; //Comment out to block all FSE selections
                                             }
-                                        }
-                                            echo "</select>
-                                            </div>
-                                            </div>";
+                                        }           
+                                        
+                                        
+                                        $fseName = trim($noticia2['fse']);
+                                        echo "<input type='hidden' style='diplay: none;' name='fseName' id='fseNameTrig' value='".$fseName."'></input>";
+                                                
+                                        $fseZip = trim($noticia2['zipcode']);
 
+                                        echo "</select>
+                                        </div>
+                                        </div>";
                                     
                                     //End of FSE Name Selection
 
@@ -430,11 +393,10 @@ function reload(form) {
                                 <caption><font size="2px", font color="red"><i id="caption">***All Field Items Above Must Be Selected, to Populate Case Data Here***</i></caption>
                             </div> -->
                             <div class="col-lg-12 mt-1" id="caseData">
-                                <div id="test">
                                 <img src="img/fse/n_header2abc.jpg" class="header2" style="width: 25%;">
                                 <p class="mr-2 mt-3" style="float:right;">cases shown: <span class="ml-2" id="cases">00</span></p>
-                                <button type="button" class="btn btn-secondary btn-sm mt-3 mr-2" id="saveCase" style="float:right; display: none;" title="select case/s below then press save">Save</button>
-                                </div>
+                                <button type="button" class="btn btn-primary btn-sm mt-3 mr-2" id="saveCase" style="float:right; display: none;" title="select case/s below then press save">Save Case</button>
+            
                                 <table>
                                 <table class="table table-striped table-hover table-sm" id="tlPlot">
                                     <!-- <div id="noCase"><p>There are No Cases from Selection Chosen</p></div> -->
@@ -444,7 +406,7 @@ function reload(form) {
                                         <th scope="col">Techline Case#</th>
                                         <th scope="col">HTSS Case#</th>
                                         <th scope="col">FSE</th>
-                                        <th scope="col">Dealer</th>
+                                        <th scope="col">Dealer Code</th>
                                         <th scope="col">Visits</th>
                                         <th scope="col">Call Count</th>
                                         <th scope="col">VIN</th>
@@ -476,7 +438,7 @@ function reload(form) {
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfK8XXYOXRP5dOjqAoareMeTU5Bo4bSQA"></script>
 </body>
-<script src="js/moment.min.js"></script>
 <script src="js/scripts.js"></script>
 <script src="js/portalScript.js"></script>
+<!-- <script src="js/test2.js"></script> -->
 </html>
